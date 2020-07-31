@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+         <h2 class="text-center pb-5">Dynamic Shopping Cart using JS</h2>
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" onclick="productHandler('quantity',false)" id="subBtn"><i class="fas fa-minus"></i></button>
+                           <input type="text" id="quantity" class="form-control text-center" value="1">
+                           <button class="btn btn-default" onclick="productHandler('quantity',true)" id="addBtn"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="quantity-price">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="productHandler('quantity2',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="quantity2" value="1">
+                           <button onclick="productHandler('quantity2',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="quantity2-price">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax (15% included):</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subTotal">1278</span></h5>
+                        <h5>$ <span id="tax"></span>128</h5>
+                        <h5>$ <span id="grandTotal">1469</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" onclick="alert('Purchase Done Successfully! :) ')" class="btn btn-primary check-out font-weight-bold">Purchase Now</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      
+
+      function productHandler(product,isIncrease) {
+         // quantity... 
+         const addQuantity = document.getElementById(product).value;
+         const quantity = parseFloat(addQuantity); 
+         let increment = quantity;
+         if (isIncrease == true) {
+             increment = quantity+1;
+          }
+         else if (isIncrease == false && quantity > 0) {
+             increment = quantity -1;
+          }  
+
+         
+         document.getElementById(product).value = increment;
+         
+         //price..
+         const addPrice = document.getElementById( product + "-price").innerText;
+         const price = parseFloat(addPrice);
+         let priceIncrement = 0;
+         if (product == 'quantity') {
+            priceIncrement = increment*1219;
+         }
+         else if (product == 'quantity2') {
+            priceIncrement = increment*59;
+         }
+
+         document.getElementById(product + "-price").innerText = priceIncrement;
+
+         productCalculation();
+      }
+
+      function productCalculation(){
+         // body...
+         const productOne = document.getElementById('quantity-price');
+         const productOnePrice = parseInt(productOne.innerText);
+         const productTwo = document.getElementById('quantity2-price'); 
+         const productTwoPrice = parseInt(productTwo.innerText); 
+
+         let totalCost = productOnePrice + productTwoPrice;
+         totalCost = parseInt(totalCost);
+         document.getElementById('subTotal').innerText= totalCost;
+
+         let taxCount = (totalCost*0.1).toFixed(0);
+         taxCount = parseInt(taxCount);
+         document.getElementById("tax").innerText = taxCount;
+
+         const grandTotal = (totalCost+taxCount);
+         document.getElementById("grandTotal").innerText = grandTotal;
+      }
+
+
+   </script>
+</body>
+
+</html>
